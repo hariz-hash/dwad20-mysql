@@ -166,6 +166,40 @@ async function main() {
 
     })
 
+    app.get('/artist', async function(req,res)
+    {
+        const[artists] = await connection.execute("SELECT * from Artist");
+        res.json(artists);  
+    })
+    app.get('/artist', async function(req,res)
+    {
+        const[artists] = await connection.execute("SELECT * from Artist");
+        res.json(artists);  
+    })
+    app.get('/genres', async function(req,res)
+    {
+        const[genres] = await connection.execute("SELECT * from Genre");
+        res.json(genres);  
+    })
+    app.get('/tracks', async function(req,res)
+    {
+        const[Track] = await connection.execute("SELECT *,Genre.Name from Track Join Genre on Track.GenreId = Genre.GenreId Join Album on Track.AlbumId = Album.AlbumId");
+        res.json(Track);  
+    })
+    app.get('/employees', async function(req,res){
+        // always true query
+        let query = "SELECT * FROM Employee WHERE 1";
+        
+        if (req.query.title) {
+            query += ` AND Title LIKE '%${req.query.title}%'`;
+          }
+        
+
+        // for testing
+        console.log("query=", query)
+        const [employees] = await connection.execute(query);
+        res.json(employees);
+    })
 }
 main();
 
